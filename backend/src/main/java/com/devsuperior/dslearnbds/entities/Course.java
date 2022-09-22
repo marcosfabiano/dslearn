@@ -1,27 +1,30 @@
 package com.devsuperior.dslearnbds.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 @Entity
 @Table(name = "tb_course")
-public class Course {
+public class Course implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String imgUri;
     private String imgGrayUri;
+    @OneToMany(mappedBy = "course")
+    private List<Offer> offers = new ArrayList<>();
 
     public Course() {
     }
-
     public Course(Long id, String name, String imgUri, String imgGrayUri) {
         this.id = id;
         this.name = name;
         this.imgUri = imgUri;
         this.imgGrayUri = imgGrayUri;
     }
-
     public Long getId() {
         return id;
     }
@@ -52,6 +55,10 @@ public class Course {
 
     public void setImgGrayUri(String imgGrayUri) {
         this.imgGrayUri = imgGrayUri;
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
     }
 
     @Override
